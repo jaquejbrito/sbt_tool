@@ -16,8 +16,9 @@ cd $OUT_DIR
 
 
 
+DIRECTORY=/u/home/s/serghei/code/sbt_tool/
 
-
+. /u/local/Modules/default/init/modules.sh
 module load samtools
 module load bowtie2
 module load bcftools
@@ -37,7 +38,7 @@ ls -lh $IN_FASTQ_UNM
 ls -lh $IN_FASTQ_CAND_RDNA
 
 
-cat $IN_FASTQ_UNM $IN_FASTQ_CAND_RDNA | bowtie2  -x /PHShome/sv188/sbt/rDNA.db/rDNA_ref --end-to-end - | samtools view -F 4 -bh - | samtools sort - >$bam_rDNA
+cat $IN_FASTQ_UNM $IN_FASTQ_CAND_RDNA | bowtie2  -x ${DIRECTORY}/db/rDNA/rDNA_ref --end-to-end - | samtools view -F 4 -bh - | samtools sort - >$bam_rDNA
 
 ls -lh $bam_rDNA
 
@@ -52,10 +53,10 @@ cov_28S=$(awk '{if ($1=="M11167.1") print $3}' $cov | awk '{s+=$1} END {print s/
 cov_18S=$(awk '{if ($1=="X03205.1") print $3}' $cov | awk '{s+=$1} END {print s/1869}')
 cov_5S=$(awk '{if ($1=="X12811.1") print $3}' $cov | awk '{s+=$1} END {print s/2231}')
 
-echo "sample,rDNA_unit,rDNA_ID,dosage" >summary_rDNA.csv
-echo "${OUT},28S,M11167.1,$cov_28S" >>summary_rDNA.csv
-echo "${OUT},18S,X03205.1,$cov_18S">>summary_rDNA.csv
-echo "${OUT},5S,X12811.1,$cov_5S">>summary_rDNA.csv
+echo "sample,rDNA_unit,rDNA_ID,dosage" >$OUT_DIR/summary_rDNA.csv
+echo "${OUT},28S,M11167.1,$cov_28S" >>$OUT_DIR/summary_rDNA.csv
+echo "${OUT},18S,X03205.1,$cov_18S">>$OUT_DIR/summary_rDNA.csv
+echo "${OUT},5S,X12811.1,$cov_5S">>$OUT_DIR/summary_rDNA.csv
 
 #M11167.1
 #X03205.1

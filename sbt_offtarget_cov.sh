@@ -15,7 +15,9 @@ cd $OUT_DIR
 
 
 
+DIRECTORY=/u/home/s/serghei/code/sbt_tool/
 
+. /u/local/Modules/default/init/modules.sh
 module load samtools
 module load bowtie2
 module load bcftools
@@ -34,7 +36,7 @@ n=0
 n=$(samtools view -bh $BAM $chr:$x-$y | samtools  depth - | awk '{s+=$3} END {print s}')
 
 echo $chr,$x,$y,$n >>${OUT}.offtarget.cov
-done</PHShome/sv188/sbt/db.human/intergenic.regions/intergenic.regions.hg19.autosomes.bed
+done<${DIRECTORY}/db/intergenic_regions/intergenic_regions_hg19_autosomes.bed
 
 
 

@@ -12,10 +12,10 @@ OUT=$OUT_DIR"/"$prefix
 mkdir $OUT_DIR
 cd $OUT_DIR
 
+DIRECTORY=/u/home/s/serghei/code/sbt_tool/
 
 
-
-
+. /u/local/Modules/default/init/modules.sh
 module load samtools
 module load bowtie2
 module load bcftools
@@ -30,7 +30,7 @@ rm -fr $OUT_DIR
 mkdir $OUT_DIR
 
 
-bowtie2  -x /PHShome/sv188/sbt/mtDNA.db/mtDNA --end-to-end $IN_FASTQ | samtools view -F 4 -bh - | samtools sort - >$bam_mtDNA
+bowtie2  -x ${DIRECTORY}/db/mtDNA/mtDNA --end-to-end $IN_FASTQ | samtools view -F 4 -bh - | samtools sort - >$bam_mtDNA
 
 
 
@@ -44,7 +44,7 @@ samtools depth $bam_mtDNA_unique >$cov
 
 
 #diversity
-samtools mpileup -uf /PHShome/sv188/sbt/mtDNA.db/mtDNA.fasta $bam_mtDNA_unique | bcftools  call -mv -Oz >$bcf
+samtools mpileup -uf ${DIRECTORY}/db/mtDNA/mtDNA.fasta $bam_mtDNA_unique | bcftools  call -mv -Oz >$bcf
 
 
 cov=$(awk '{print $3}' $cov | awk '{s+=$1} END {print s/16569}')
