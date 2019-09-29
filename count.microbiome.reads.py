@@ -13,9 +13,13 @@ args = ap.parse_args()
 
 
 
+fileOut=open(args.out,"w")
 
 
 n_reads=0
+
+
+reads_set=set()
 
 with pysam.AlignmentFile(args.bam, 'rb', check_sq=False) as input_fo:
 	for read in input_fo.fetch(until_eof=True):
@@ -30,8 +34,18 @@ with pysam.AlignmentFile(args.bam, 'rb', check_sq=False) as input_fo:
 		identity= 1-(number_mismatches)/float(alignment_length)
 		
 		if (prc_mapped>=0.8) and (identity>0.9):
-			n_reads+=1
+			reads_set.add(read.query_name)
 
 
+print ("Number of reads",len(reads_set))
 
-print (n_reads)
+
+for i in reads_set:
+	fileOut.write(i)
+	fileOut.write("\n")
+
+
+fileOut.close()
+		
+
+print ("Done!")
