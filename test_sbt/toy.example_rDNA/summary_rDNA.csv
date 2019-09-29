@@ -1,0 +1,4 @@
+sample,rDNA_unit,rDNA_ID,dosage
+/u/home/s/serghei/code/sbt_tool/test_sbt//toy.example_rDNA//toy.example_extended_unmapped.fastq,28S,M11167.1,0.111244
+/u/home/s/serghei/code/sbt_tool/test_sbt//toy.example_rDNA//toy.example_extended_unmapped.fastq,18S,X03205.1,0
+/u/home/s/serghei/code/sbt_tool/test_sbt//toy.example_rDNA//toy.example_extended_unmapped.fastq,5S,X12811.1,0.0533393

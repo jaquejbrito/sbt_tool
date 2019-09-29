@@ -41,7 +41,8 @@ echo $line
 echo "samtools view -bh $BAM $line | samtools fastq - > $FASTQ_UNM">>master_${PREFIX}.sh
 done<non.human.references.txt
 
-samtools view -bh $BAM MT | samtools fastq - >$FASTQ_MT
+#gor hg19 it is usually MT. MAke an optional option to provide name of MT
+samtools view -bh $BAM chrM | samtools fastq - >$FASTQ_MT
 
 
 rm -fr $FASTQ_candidate_rDNA
@@ -50,7 +51,7 @@ do
 chr=$(echo $line | awk -F "," '{print $1}')
 x=$(echo $line | awk -F "," '{print $2}')
 y=$(echo $line | awk -F "," '{print $3}')
-echo "samtools view -bh $BAM $chr:$x-$y | samtools fastq - >>$FASTQ_candidate_rDNA">>master_${PREFIX}.sh
+echo "samtools view -bh $BAM chr$chr:$x-$y | samtools fastq - >>$FASTQ_candidate_rDNA">>master_${PREFIX}.sh
 done<${DIRECTORY}/db/rDNA/rDNA.kmers.75.clean.filtered.bed
 
 
